@@ -1,0 +1,91 @@
+create database tuesday;
+show databases;
+
+use tuesday;
+create table category(
+c_id int primary key,
+c_name varchar(25),
+c_details varchar(25)
+);
+
+insert into category values(101,'electronics','najdkhfihfeei');
+insert into category values(102,'home furniture','ncdsnknxsnodj');
+
+select * from category;
+
+create table products(
+p_id int primary key,
+p_name varchar(25),
+p_details varchar(35),
+c_id int,
+foreign key products (c_id) references category (c_id) on update cascade
+);
+drop table products;
+desc products;
+
+insert into products values(105, 'powerbank','jasidhdifh',101);
+select * from products;
+
+#primary key: is not null, does not accepts duplicates.
+#foriegn key: is not null but it does accepts duplicates.
+#unkonwn products will not be addedd.
+
+delete from category where c_id =102;
+delete from category where c_id =101;
+
+update category set c_id=107 where c_name ='electronics';
+# on delete cascade
+# on update cascade
+
+#applied above
+
+# adding a unique constraint
+# droping a unique constrint
+drop database tuesday;
+use tuesday;
+
+
+alter table products
+add constraint unique_id unique (p_id);
+
+alter table products
+drop constraint unique_id;
+
+use amazon;
+show tables from amazon;
+
+alter table employee
+add primary key(e_id);
+
+alter table employee
+drop primary key;
+
+#foreign key 
+use amazon;
+desc customer;
+alter table customer 
+add primary key (c_id);
+
+alter table seller
+add c_id int not null;
+
+
+desc seller;
+alter table seller
+add foreign key (c_id) references customer(c_id);
+
+#check constraint
+desc employee;
+alter table employee 
+add check (e_handlingNoOfProjects>0);
+
+#default constraint
+alter table employee
+add e_country varchar(30) default 'India';
+
+select * from employee;
+
+
+
+
+
