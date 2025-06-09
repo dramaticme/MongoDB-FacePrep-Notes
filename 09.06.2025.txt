@@ -1,0 +1,307 @@
+// Creating a Collection and show databases
+---------code--------
+package Connection;
+import org.bson.Document;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoIterable;
+
+public class MongoDB_COMPASS {
+   public static void main(String[] args) {
+      MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
+      
+      MongoDatabase database = mongoClient.getDatabase("vit");
+      database.createCollection("EmployeeRecord");
+      
+      // retrieving a collection
+      MongoCollection<Document> collection = database.getCollection("sampleCollection");
+      Document document = new Document("title", "MongoDB");
+      
+      //Inserting document into the collection
+      collection.insertOne(document);
+      
+      MongoIterable<String> loop1 = mongoClient.listDatabaseNames();
+      for (String name : loop1) {
+         System.out.println(name);
+      }
+      
+   }
+}
+--------output---------
+Jun 09, 2025 7:20:03 PM com.mongodb.diagnostics.logging.Loggers shouldUseSLF4J
+WARNING: SLF4J not found on the classpath.  Logging is disabled for the 'org.mongodb.driver' component
+admin
+config
+local
+myDb
+operators
+test
+vit
+vitap
+
+
+//Dropping a database
+---------code----------
+package Connection;
+import org.bson.Document;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+//import com.mongodb.client.MongoIterable;
+
+public class MongoDB_COMPASS {
+   public static void main(String[] args) {
+      MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
+      
+      MongoDatabase database = mongoClient.getDatabase("vit");
+      
+      
+      // retrieving a collection
+      MongoCollection<Document> collection = database.getCollection("sampleCollection");
+      
+      collection.drop();
+      System.out.println("Collection dropped.");
+      
+   }
+}
+--------output--------
+Jun 09, 2025 7:45:55 PM com.mongodb.diagnostics.logging.Loggers shouldUseSLF4J
+WARNING: SLF4J not found on the classpath.  Logging is disabled for the 'org.mongodb.driver' component
+Collection dropped.
+
+
+//Display all Collections
+--------code-------
+package Connection;
+import org.bson.Document;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoIterable;
+
+public class MongoDB_COMPASS {
+   public static void main(String[] args) {
+      MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
+      
+      MongoDatabase database = mongoClient.getDatabase("vit");
+      database.createCollection("EmployeeRecord");
+      
+      
+      MongoIterable<String> collection = database.listCollectionNames();
+      
+      for (String name : collection) {
+         System.out.println(name);
+      }
+      
+   }
+}
+
+------output--------
+Jun 09, 2025 7:34:14 PM com.mongodb.diagnostics.logging.Loggers shouldUseSLF4J
+WARNING: SLF4J not found on the classpath.  Logging is disabled for the 'org.mongodb.driver' component
+EmployrrRecord
+vitapstudent
+EmployeeRecord
+sampleCollection
+sales
+books
+student
+
+//for inserting Documnets
+---------code--------
+package Connection;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bson.Document;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+
+public class MongoDB_COMPASS {
+   public static void main(String[] args) {
+      // Creating a Mongo client 
+      MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
+      MongoDatabase database = mongoClient.getDatabase("myDb");
+
+      // Get the collection
+      MongoCollection<Document> collection = database.getCollection("sampleCollection");
+
+      Document document = new Document("First_Name", "Mahesh")
+         .append("Last_Name", "Parashar")
+         .append("Date_Of_Birth", "1990-08-21")
+         .append("e_mail", "mahesh_parashar.123@gmail.com")
+         .append("phone", "9034343345");
+
+      collection.insertOne(document);
+      List<Document> documents = new ArrayList<>();
+
+      documents.add(new Document("First_Name", "Radhika")
+         .append("Last_Name", "Sharma")
+         .append("Date_Of_Birth", "1995-09-26")
+         .append("e_mail", "radhika_sharma.123@gmail.com")
+         .append("phone", "9000012345"));
+
+      documents.add(new Document("First_Name", "Rachel")
+         .append("Last_Name", "Christopher")
+         .append("Date_Of_Birth", "1990-02-16")
+         .append("e_mail", "Rachel_Christopher.123@gmail.com")
+         .append("phone", "9000054321"));
+
+      documents.add(new Document("First_Name", "Fathima")
+         .append("Last_Name", "Sheik")
+         .append("Date_Of_Birth", "1990-02-16")
+         .append("e_mail", "Fathima_Sheik.123@gmail.com")
+         .append("phone", "9000054321"));
+
+      collection.insertMany(documents);
+
+      System.out.println("Documents inserted.");
+   }
+}
+---------output---------
+Jun 09, 2025 7:41:40 PM com.mongodb.diagnostics.logging.Loggers shouldUseSLF4J
+WARNING: SLF4J not found on the classpath.  Logging is disabled for the 'org.mongodb.driver' component
+Documents inserted.
+
+//Selecting Documents
+-------code-------
+package Connection;
+import org.bson.Document;
+
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoIterable;
+import com.mongodb.client.model.Filters;
+
+public class MongoDB_COMPASS {
+   public static void main(String[] args) {
+      MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
+      
+      MongoDatabase database = mongoClient.getDatabase("vit");
+      
+      
+      // retrieving a collection
+      MongoCollection<Document> collection = database.getCollection("sampleCollection");
+      
+      FindIterable<Document> allDocuments = collection.find();
+      	for(Document document : allDocuments) {
+      		System.out.println(document);
+      	}
+    	 System.out.println("***Selected Document***");
+    	  
+    	  // select a particular document
+    	  FindIterable<Document> documents = collection.find(Filters.eq("First_name","Mahesh"));
+    	  for(Document document : documents) {
+    		  System.out.println(document);
+    	  }
+      
+      
+   }
+}
+-------output-------
+Jun 09, 2025 7:57:13 PM com.mongodb.diagnostics.logging.Loggers shouldUseSLF4J
+WARNING: SLF4J not found on the classpath.  Logging is disabled for the 'org.mongodb.driver' component
+***Selected Document***
+
+//updating documents
+-------code--------
+package Connection;
+import org.bson.Document;
+
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+//import com.mongodb.client.MongoIterable;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
+
+public class MongoDB_COMPASS {
+   public static void main(String[] args) {
+      MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
+      
+      MongoDatabase database = mongoClient.getDatabase("vit");
+      
+      
+      // retrieving a collection
+      MongoCollection<Document> collection = database.getCollection("sampleCollection");
+      
+     collection.updateOne(Filters.eq("First_name", "Mahesh"),
+    		 Updates.set("e_mail","maheshparashar@gmail.com"));
+     System.out.println("Document Updated");
+     System.out.println("***Updaated Document***");
+     
+     FindIterable<Document> documents = collection.find(Filters.eq("First_name","Mahesh"));
+     
+     for(Document document : documents) {
+    	 System.out.println(document);
+     }
+      
+      
+   }
+}
+-----output-----
+Jun 09, 2025 8:03:55 PM com.mongodb.diagnostics.logging.Loggers shouldUseSLF4J
+WARNING: SLF4J not found on the classpath.  Logging is disabled for the 'org.mongodb.driver' component
+Document Updated
+***Updaated Document***
+
+
+//UpdateMany
+
+-------code------
+package Connection;
+import org.bson.Document;
+
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+//import com.mongodb.client.MongoIterable;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
+
+public class MongoDB_COMPASS {
+   public static void main(String[] args) {
+      MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
+      
+      MongoDatabase database = mongoClient.getDatabase("vit");
+      
+      
+      // retrieving a collection
+      MongoCollection<Document> collection = database.getCollection("sampleCollection");
+      
+     collection.updateMany(Filters.eq("First_Name", "Mahesh"),
+    		 Updates.set("e_mail","maheshparashar@gmail.com"));
+     System.out.println("Document Updated");
+     System.out.println("***Updated Document***");
+     
+     FindIterable<Document> documents = collection.find(Filters.eq("First_Name","Mahesh"));
+     
+     for(Document document : documents) {
+    	 System.out.println(document);
+     }
+      
+      
+   }
+}
+-------output--------
+Jun 09, 2025 8:17:38 PM com.mongodb.diagnostics.logging.Loggers shouldUseSLF4J
+WARNING: SLF4J not found on the classpath.  Logging is disabled for the 'org.mongodb.driver' component
+Document Updated
+***Updated Document***
