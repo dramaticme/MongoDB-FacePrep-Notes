@@ -1,0 +1,59 @@
+create data folder inside program files
+create 
+db0
+db1
+db2
+inside data folder 
+
+//run cmd using run as administrator
+//for db0
+cd "C:\Program Files\MongoDB\Server\8.0\bin"
+
+mongod.exe --replSet myReplSet --dbpath C:\data\db0 --port 27017 --bind_ip localhost
+
+cd "C:\Program Files\MongoDB\Server\8.0\bin"
+
+mongo.exe
+
+//for db1
+cd "C:\Program Files\MongoDB\Server\8.0\bin"
+
+mongod.exe --replSet myReplSet --dbpath C:\data\db0 --port 27017 --bind_ip localhost
+
+cd "C:\Program Files\MongoDB\Server\8.0\bin"
+
+mongo.exe
+
+//for db2
+cd "C:\Program Files\MongoDB\Server\8.0\bin"
+
+mongod.exe --replSet myReplSet --dbpath C:\data\db0 --port 27017 --bind_ip localhost
+
+cd "C:\Program Files\MongoDB\Server\8.0\bin"
+
+mongo.exe
+
+--------
+//db0
+mongod --port 27017 --dbpath ~/Desktop/mongoDB/replicaPractice/db0 --replSet "rs0" --bind_ip localhost --fork --logpath ~/db0.log
+
+//db1
+mongod --port 27018 --dbpath ~/Desktop/mongoDB/replicaPractice/db1 --replSet "rs0" --bind_ip localhost --fork --logpath ~/db1.log
+
+//db2
+mongod --port 27019 --dbpath ~/Desktop/mongoDB/replicaPractice/db2 --replSet "rs0" --bind_ip localhost --fork --logpath ~/db2.log
+
+//open a new shell and run
+mongosh --port 27017
+
+
+rs.initiate({
+  _id: "rs0",
+  members: [
+    { _id: 0, host: "localhost:27017" },
+    { _id: 1, host: "localhost:27018" },
+    { _id: 2, host: "localhost:27019" }
+  ]
+})
+
+rs.status()
