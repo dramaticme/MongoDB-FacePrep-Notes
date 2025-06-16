@@ -1,0 +1,208 @@
+create data folder inside program files
+create 
+db0
+db1
+db2
+inside data folder 
+
+//run cmd using run as administrator
+//for db0
+cd "C:\Program Files\MongoDB\Server\8.0\bin"
+
+mongod.exe --replSet myReplSet --dbpath C:\data\db0 --port 27017 --bind_ip localhost
+
+cd "C:\Program Files\MongoDB\Server\8.0\bin"
+
+mongo.exe
+
+//for db1
+cd "C:\Program Files\MongoDB\Server\8.0\bin"
+
+mongod.exe --replSet myReplSet --dbpath C:\data\db0 --port 27017 --bind_ip localhost
+
+cd "C:\Program Files\MongoDB\Server\8.0\bin"
+
+mongo.exe
+
+//for db2
+cd "C:\Program Files\MongoDB\Server\8.0\bin"
+
+mongod.exe --replSet myReplSet --dbpath C:\data\db0 --port 27017 --bind_ip localhost
+
+cd "C:\Program Files\MongoDB\Server\8.0\bin"
+
+mongo.exe
+
+--------
+//db0
+mongod --port 27017 --dbpath ~/Desktop/mongoDB/replicaPractice/db0 --replSet "rs0" --bind_ip localhost --fork --logpath ~/db0.log
+
+//db1
+mongod --port 27018 --dbpath ~/Desktop/mongoDB/replicaPractice/db1 --replSet "rs0" --bind_ip localhost --fork --logpath ~/db1.log
+
+//db2
+mongod --port 27019 --dbpath ~/Desktop/mongoDB/replicaPractice/db2 --replSet "rs0" --bind_ip localhost --fork --logpath ~/db2.log
+
+//open a new shell and run
+mongosh --port 27017
+
+
+rs.initiate({
+  _id: "rs0",
+  members: [
+    { _id: 0, host: "localhost:27017" },
+    { _id: 1, host: "localhost:27018" },
+    { _id: 2, host: "localhost:27019" }
+  ]
+})
+
+rs.status()
+----------output-----------
+test> rs.initiate({
+...   _id: "myReplSet",
+...   members: [
+...     { _id: 0, host: "localhost:27017" },
+...     { _id: 1, host: "localhost:27018" },
+...     { _id: 2, host: "localhost:27019" }
+...   ]
+... })
+...
+{
+  ok: 1,
+  '$clusterTime': {
+    clusterTime: Timestamp({ t: 1749781165, i: 1 }),
+    signature: {
+      hash: Binary.createFromBase64('AAAAAAAAAAAAAAAAAAAAAAAAAAA=', 0),
+      keyId: Long('0')
+    }
+  },
+  operationTime: Timestamp({ t: 1749781165, i: 1 })
+}
+myReplSet [direct: secondary] test> rs.status()
+{
+  set: 'myReplSet',
+  date: ISODate('2025-06-13T02:19:48.397Z'),
+  myState: 1,
+  term: Long('1'),
+  syncSourceHost: '',
+  syncSourceId: -1,
+  heartbeatIntervalMillis: Long('2000'),
+  majorityVoteCount: 2,
+  writeMajorityCount: 2,
+  votingMembersCount: 3,
+  writableVotingMembersCount: 3,
+  optimes: {
+    lastCommittedOpTime: { ts: Timestamp({ t: 1749781176, i: 16 }), t: Long('1') },
+    lastCommittedWallTime: ISODate('2025-06-13T02:19:36.973Z'),
+    readConcernMajorityOpTime: { ts: Timestamp({ t: 1749781176, i: 16 }), t: Long('1') },
+    appliedOpTime: { ts: Timestamp({ t: 1749781176, i: 16 }), t: Long('1') },
+    durableOpTime: { ts: Timestamp({ t: 1749781176, i: 16 }), t: Long('1') },
+    writtenOpTime: { ts: Timestamp({ t: 1749781176, i: 16 }), t: Long('1') },
+    lastAppliedWallTime: ISODate('2025-06-13T02:19:36.973Z'),
+    lastDurableWallTime: ISODate('2025-06-13T02:19:36.973Z'),
+    lastWrittenWallTime: ISODate('2025-06-13T02:19:36.973Z')
+  },
+  lastStableRecoveryTimestamp: Timestamp({ t: 1749781165, i: 1 }),
+  electionCandidateMetrics: {
+    lastElectionReason: 'electionTimeout',
+    lastElectionDate: ISODate('2025-06-13T02:19:36.755Z'),
+    electionTerm: Long('1'),
+    lastCommittedOpTimeAtElection: { ts: Timestamp({ t: 1749781165, i: 1 }), t: Long('-1') },
+    lastSeenWrittenOpTimeAtElection: { ts: Timestamp({ t: 1749781165, i: 1 }), t: Long('-1') },
+    lastSeenOpTimeAtElection: { ts: Timestamp({ t: 1749781165, i: 1 }), t: Long('-1') },
+    numVotesNeeded: 2,
+    priorityAtElection: 1,
+    electionTimeoutMillis: Long('10000'),
+    numCatchUpOps: Long('0'),
+    newTermStartDate: ISODate('2025-06-13T02:19:36.876Z'),
+    wMajorityWriteAvailabilityDate: ISODate('2025-06-13T02:19:37.362Z')
+  },
+  members: [
+    {
+      _id: 0,
+      name: 'localhost:27017',
+      health: 1,
+      state: 1,
+      stateStr: 'PRIMARY',
+      uptime: 71,
+      optime: { ts: Timestamp({ t: 1749781176, i: 16 }), t: Long('1') },
+      optimeDate: ISODate('2025-06-13T02:19:36.000Z'),
+      optimeWritten: { ts: Timestamp({ t: 1749781176, i: 16 }), t: Long('1') },
+      optimeWrittenDate: ISODate('2025-06-13T02:19:36.000Z'),
+      lastAppliedWallTime: ISODate('2025-06-13T02:19:36.973Z'),
+      lastDurableWallTime: ISODate('2025-06-13T02:19:36.973Z'),
+      lastWrittenWallTime: ISODate('2025-06-13T02:19:36.973Z'),
+      syncSourceHost: '',
+      syncSourceId: -1,
+      infoMessage: 'Could not find member to sync from',
+      electionTime: Timestamp({ t: 1749781176, i: 1 }),
+      electionDate: ISODate('2025-06-13T02:19:36.000Z'),
+      configVersion: 1,
+      configTerm: 1,
+      self: true,
+      lastHeartbeatMessage: ''
+    },
+    {
+      _id: 1,
+      name: 'localhost:27018',
+      health: 1,
+      state: 2,
+      stateStr: 'SECONDARY',
+      uptime: 22,
+      optime: { ts: Timestamp({ t: 1749781176, i: 16 }), t: Long('1') },
+      optimeDurable: { ts: Timestamp({ t: 1749781176, i: 16 }), t: Long('1') },
+      optimeWritten: { ts: Timestamp({ t: 1749781176, i: 16 }), t: Long('1') },
+      optimeDate: ISODate('2025-06-13T02:19:36.000Z'),
+      optimeDurableDate: ISODate('2025-06-13T02:19:36.000Z'),
+      optimeWrittenDate: ISODate('2025-06-13T02:19:36.000Z'),
+      lastAppliedWallTime: ISODate('2025-06-13T02:19:36.973Z'),
+      lastDurableWallTime: ISODate('2025-06-13T02:19:36.973Z'),
+      lastWrittenWallTime: ISODate('2025-06-13T02:19:36.973Z'),
+      lastHeartbeat: ISODate('2025-06-13T02:19:46.864Z'),
+      lastHeartbeatRecv: ISODate('2025-06-13T02:19:47.901Z'),
+      pingMs: Long('0'),
+      lastHeartbeatMessage: '',
+      syncSourceHost: 'localhost:27017',
+      syncSourceId: 0,
+      infoMessage: '',
+      configVersion: 1,
+      configTerm: 1
+    },
+    {
+      _id: 2,
+      name: 'localhost:27019',
+      health: 1,
+      state: 2,
+      stateStr: 'SECONDARY',
+      uptime: 22,
+      optime: { ts: Timestamp({ t: 1749781176, i: 16 }), t: Long('1') },
+      optimeDurable: { ts: Timestamp({ t: 1749781176, i: 16 }), t: Long('1') },
+      optimeWritten: { ts: Timestamp({ t: 1749781176, i: 16 }), t: Long('1') },
+      optimeDate: ISODate('2025-06-13T02:19:36.000Z'),
+      optimeDurableDate: ISODate('2025-06-13T02:19:36.000Z'),
+      optimeWrittenDate: ISODate('2025-06-13T02:19:36.000Z'),
+      lastAppliedWallTime: ISODate('2025-06-13T02:19:36.973Z'),
+      lastDurableWallTime: ISODate('2025-06-13T02:19:36.973Z'),
+      lastWrittenWallTime: ISODate('2025-06-13T02:19:36.973Z'),
+      lastHeartbeat: ISODate('2025-06-13T02:19:46.881Z'),
+      lastHeartbeatRecv: ISODate('2025-06-13T02:19:47.841Z'),
+      pingMs: Long('0'),
+      lastHeartbeatMessage: '',
+      syncSourceHost: 'localhost:27017',
+      syncSourceId: 0,
+      infoMessage: '',
+      configVersion: 1,
+      configTerm: 1
+    }
+  ],
+  ok: 1,
+  '$clusterTime': {
+    clusterTime: Timestamp({ t: 1749781176, i: 16 }),
+    signature: {
+      hash: Binary.createFromBase64('AAAAAAAAAAAAAAAAAAAAAAAAAAA=', 0),
+      keyId: Long('0')
+    }
+  },
+  operationTime: Timestamp({ t: 1749781176, i: 16 })
+}
+myReplSet [direct: primary] test>
