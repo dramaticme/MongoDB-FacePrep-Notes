@@ -1,0 +1,111 @@
+show databases;
+create database vitap;
+
+use vitap;
+
+create table cse(
+s_id int,
+s_name varchar(30),
+s_marks int,
+s_yearOfJoining int
+);
+ desc vitap;
+ select * from cse;
+ 
+ insert into cse(s_id, s_name, s_marks, s_yearOfJoining)
+ values(1,'ayushi',100,2022),
+ (2,'vaibhav',98,2022),
+ (3,'kashish',97,2022);
+ 
+ #question
+ #create 1 database
+ #3 tables 4 cols 10 rows
+ 
+ create database amazon;
+ use amazon;
+ create table customer(
+ c_id int,
+ c_name varchar(30),
+ c_totalPurchases int,
+ c_place varchar(10)
+ );
+ 
+ insert into customer(c_id, c_name,c_totalPurchases, c_place)
+ values(1,'sakshi',56,'India'),
+ (2,'vaibahv',26,'India'),
+ (3,'bhojraj',77,'India'),
+ (4,'rohini',4,'India'),
+ (5,'rani',33,'India'),
+ (6,'prashanth',67,'India'),
+ (7,'madhuri',88,'India'),
+ (8,'rohan',29,'India'),
+ (9,'nita',907,'India'),
+ (10,'dilip',32,'India');
+ 
+ select* from customer;
+ 
+ create table seller(
+ s_id int,
+ s_name varchar(30),
+ s_productsSold int,
+ s_yearOfJoining int
+ );
+ 
+ insert into seller(s_id, s_name,s_productsSold, s_yearOfJoining)
+ values(1,'kriti',747238,'2011'),
+ (2,'ulti',2447,'2014'),
+ (3,'ramesh',7745,'2023'),
+ (4,'kali',454,'2021'),
+ (5,'das',586,'2023'),
+ (6,'harshith',54,'2014'),
+ (7,'kumar',64,'2010'),
+ (8,'niraj',565,'2023'),
+ (9,'nikitha',684146,'2020'),
+ (10,'komal',2626,'2024');
+ 
+  select* from seller;
+  
+  show databases;
+  
+  create table employee(
+  e_id int,
+  e_name varchar(30),
+  e_handlingNoOfProjects int,
+  e_yearOfjoining int
+  );
+  
+insert into employee(e_id, e_name,e_handlingNoOfProjects, e_yearOfJoining)
+ values(1,'sakshi',7,'2011'),
+ (2,'ulti',2,'2014'),
+ (3,'ramesh',7,'2023'),
+ (4,'kali',4,'2021'),
+ (5,'das',5,'2023'),
+ (6,'harshith',5,'2014'),
+ (7,'kumar',6,'2010'),
+ (8,'niraj',5,'2023'),
+ (9,'nikitha',6,'2020'),
+ (10,'komal',2,'2024');
+  
+  select * from employee;
+  
+  desc employee;
+  
+  use vitap;
+select * from cse; 
+alter table cse add(
+s_phno varchar(10),
+s_skills varchar(50)
+);
+select * from cse; 
+
+alter table cse drop column s_skills;
+select * from cse; 
+ 
+alter table cse add(
+s_country varchar(30) default 'India'
+);
+select * from cse; 
+alter table cse drop column s_phno;
+  
+update cse set s_marks=100 where s_id=2;
+update cse set s_marks =s_marks +50;

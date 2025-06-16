@@ -1,0 +1,93 @@
+# delete, drop and truncate
+#drop -DDL - DB, table, Column
+
+show databases;
+create database gitam;
+#drop is a permanent action
+drop database gitam;
+
+use vit;
+show tables from vit;
+
+
+create table mtech(
+id int);
+
+drop table mtech;
+desc first_year;
+
+alter table first_year add(
+s_country varchar(30) default 'India'
+); 
+select * from first_year;
+
+alter table first_year drop column s_country;
+
+
+#delete
+# delete table - deletes the information not the structure eof the table.
+
+show databases;
+use amazon;
+show tables from amazon;
+
+select* from employee;
+delete from employee;
+
+#delete particular 
+delete from employee where e_id =3;
+
+delete from employee where e_handlingNoOfProjects<5;
+
+#truncate
+#does not make changes in the structure of the table.
+truncate table employee; 
+desc employee;
+
+# we cannot rollback the transcation in truncate.
+# we ccan rollback the transcation in delete;
+# drop- it permanently deltes the complete table;
+
+# all the laptops should be connnected in the lan cable
+# only then we can perform operations like revoke & grant;
+
+#grant is to provide permission to access a particular database
+#revoke is the take back the permission or withdraw permission from the user.
+#transcation control
+#savepoint - u can save if savepoint 1,2,3 like that...
+#rollback
+#commit - want to save as a permanent change.
+
+create database gitam;
+use gitam;
+create table cse(
+id int,
+name varchar(30)
+);
+start transaction;
+insert into cse values (1001,'sakshi');
+savepoint t11;
+insert into cse values(1002,'vaibhav');
+savepoint t12;
+
+delete from cse where id =1002;
+select * from cse;
+rollback to t12;
+
+select * from cse;
+commit;
+
+use amazon;
+select* from employee;
+select e_name as Employee_Name from employee;
+
+desc employee;
+
+#operators logical and compar
+#and , or
+select* from employee;
+select e_name as Employee_name from employee where e_handlingNoOfProjects>6;
+
+#in ans not in operator
+# select * from members where 'menbership_number' IN (1,2,3);
+# the above query gives the rows where membership_number is 1,2 or 3.

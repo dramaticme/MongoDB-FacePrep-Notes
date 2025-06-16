@@ -1,0 +1,186 @@
+show databases;
+
+use vitap1;
+show tables from vitap1;
+select* from worker;
+
+select department, count(department) from worker group by department;
+
+select count(department)
+from worker
+group by department
+order by count(department) desc
+limit 1;
+
+
+select department, sum(salary) as sum_e 
+from worker 
+group by department 
+order by sum_e
+limit 1;
+
+select department, sum(salary) as sum_e 
+from worker
+group by department
+order by sum_e desc
+limit 1;
+
+select department, count(department)
+from worker 
+group by department
+having count(department)>3;
+
+select depaartment, sum(salary)
+from worker
+group by department
+order by sum(salary) desc
+limit 1 offset 1;
+
+select first_name, department
+from worker 
+where salary =(select max(salary) from worker);
+
+select first_name, department
+from worker
+where salary>(select avg(salary) from worker);
+
+
+select * from worker
+where salary = (select max(salary) from worker
+where department = 'hr')
+and  department ='hr';
+
+select * from worker 
+where joining_date = (select min(joining_date) from worker);
+
+select* from worker
+where salary>(select avg(salary) from worker);
+
+create table student(
+s_id int,
+s_name varchar(25));
+
+insert into student values(101, 'sakshi'),
+(102, 'vaibhav'),
+(103, 'bhojraj'),
+(104, 'madhuri');
+
+create table address(
+s_id int,
+s_address varchar(25));
+
+insert into address values(101,'India'),
+(104, 'India'),
+(105, 'India');
+
+select * from 
+student cross join address;
+	
+select * from student inner join address 
+where student.s_id =address.s_id;
+
+select * from student
+left outer join address
+on (student.s_id = address.s_id);
+
+select * from student
+right outer join address
+on (student.s_id = address.s_id);
+
+select * from student
+full join address
+on (student.s_id = address.s_id);
+
+show databases;
+
+use vitap1;
+show tables from vitap1;
+select* from worker;
+
+select department, count(department) from worker group by department;
+
+select count(department)
+from worker
+group by department
+order by count(department) desc
+limit 1;
+
+
+select department, sum(salary) as sum_e 
+from worker 
+group by department 
+order by sum_e
+limit 1;
+
+select department, sum(salary) as sum_e 
+from worker
+group by department
+order by sum_e desc
+limit 1;
+
+select department, count(department)
+from worker 
+group by department
+having count(department)>3;
+
+select depaartment, sum(salary)
+from worker
+group by department
+order by sum(salary) desc
+limit 1 offset 1;
+
+select first_name, department
+from worker 
+where salary =(select max(salary) from worker);
+
+select first_name, department
+from worker
+where salary>(select avg(salary) from worker);
+
+
+select * from worker
+where salary = (select max(salary) from worker
+where department = 'hr')
+and  department ='hr';
+
+select * from worker 
+where joining_date = (select min(joining_date) from worker);
+
+select* from worker
+where salary>(select avg(salary) from worker);
+
+create table student(
+s_id int,
+s_name varchar(25));
+
+insert into student values(101, 'sakshi'),
+(102, 'vaibhav'),
+(103, 'bhojraj'),
+(104, 'madhuri');
+
+create table address(
+s_id int,
+s_address varchar(25));
+
+insert into address values(101,'India'),
+(104, 'India'),
+(105, 'India');
+
+select * from 
+student cross join address;
+	
+select * from student inner join address 
+where student.s_id =address.s_id;
+
+select * from student
+left outer join address
+on (student.s_id = address.s_id);
+
+select * from student
+right outer join address
+on (student.s_id = address.s_id);
+
+select * from student
+full join address
+on (student.s_id = address.s_id);
+
